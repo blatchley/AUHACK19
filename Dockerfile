@@ -28,5 +28,5 @@ COPY --from=build /cpp/src/project/chat_client.html /app/wwwroot/index.html
 
 ENTRYPOINT ["/app/websocket-chat-server", "0.0.0.0", "80", "/app/wwwroot"]
 
-EXPOSE 8080
+EXPOSE 80
 
