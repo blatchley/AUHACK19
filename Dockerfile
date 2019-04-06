@@ -24,7 +24,7 @@ RUN cmake -Bbin -H. && cmake --build bin
 
 FROM ubuntu:bionic 
 COPY --from=build /cpp/src/project/bin/websocket-chat-server /app/
-COPY --from=build /cpp/src/project/chat_client.html /app/wwwroot/index.html
+COPY --from=build /cpp/src/project/snake.html /app/wwwroot/index.html
 
 ENTRYPOINT ["/app/websocket-chat-server", "0.0.0.0", "80", "/app/wwwroot"]
 
