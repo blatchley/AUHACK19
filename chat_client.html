@@ -51,6 +51,25 @@
       if (event.keyCode === 13) {
         send.click();
       }
+    };
+    sendMessage.onkeydown = function(ev) {
+      ev.preventDefault();
+      str = ""
+      if (event.keyCode === 37) {
+        str += " left"
+      }
+      if (event.keyCode === 38) {
+        str += " up"
+      }
+      if (event.keyCode === 39) {
+        str += " right"
+      }
+      if (event.keyCode === 40) {
+        str += " down"
+      }
+      if (str != "") {
+        ws.send(userName.value + " moved " + str)
+      }
     }
   </script>
 </body>
