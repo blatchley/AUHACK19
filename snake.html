@@ -57,9 +57,9 @@ var apple = {
 function loop() {
   console.log("calling loop")
   // slow game loop to 15 fps instead of 60 (60/15 = 4)
-  if (++count < 4) {
-    return;
-  }
+  // if (++count < 4) {
+  //   return;
+  // }
 
   count = 0;
   context.clearRect(0,0,canvas.width,canvas.height);
@@ -151,7 +151,7 @@ var ws = null;
         // setdirection(ev.data);
         coords = ev.data.split(',')
         setposition(coords[0], coords[1])
-        loop()
+        requestAnimationFrame(loop)
         
       };
       ws.onerror = function(ev) {
