@@ -27,7 +27,7 @@ class shared_state;
 class websocket_session : public std::enable_shared_from_this<websocket_session>
 {
     beast::flat_buffer buffer_;
-    websocket::stream<tcp::socket> ws_;
+    websocket::stream<udp::socket> ws_;
     std::shared_ptr<shared_state> state_;
     std::vector<std::shared_ptr<std::string const>> queue_;
 
@@ -38,7 +38,7 @@ class websocket_session : public std::enable_shared_from_this<websocket_session>
 
 public:
     websocket_session(
-        tcp::socket socket,
+        udp::socket socket,
         std::shared_ptr<shared_state> const& state);
 
     ~websocket_session();

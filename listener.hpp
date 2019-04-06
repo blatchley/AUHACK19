@@ -21,7 +21,7 @@ class shared_state;
 class listener : public std::enable_shared_from_this<listener>
 {
     tcp::acceptor acceptor_;
-    tcp::socket socket_;
+    udp::socket socket_;
     std::shared_ptr<shared_state> state_;
 
     void fail(error_code ec, char const* what);
@@ -30,7 +30,7 @@ class listener : public std::enable_shared_from_this<listener>
 public:
     listener(
         net::io_context& ioc,
-        tcp::endpoint endpoint,
+        udp::endpoint endpoint,
         std::shared_ptr<shared_state> const& state);
 
     // Start accepting incoming connections

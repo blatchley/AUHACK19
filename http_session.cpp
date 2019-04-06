@@ -187,7 +187,7 @@ handle_request(
 
 http_session::
 http_session(
-    tcp::socket socket,
+    udp::socket socket,
     std::shared_ptr<shared_state> const& state)
     : socket_(std::move(socket))
     , state_(state)
@@ -226,7 +226,7 @@ on_read(error_code ec, std::size_t)
     // This means they closed the connection
     if(ec == http::error::end_of_stream)
     {
-        socket_.shutdown(tcp::socket::shutdown_send, ec);
+        socket_.shutdown(udp::socket::shutdown_send, ec);
         return;
     }
 
@@ -287,7 +287,7 @@ on_write(error_code ec, std::size_t, bool close)
     {
         // This means we should close the connection, usually because
         // the response indicated the "Connection: close" semantic.
-        socket_.shutdown(tcp::socket::shutdown_send, ec);
+        socket_.shutdown(udp::socket::shutdown_send, ec);
         return;
     }
 

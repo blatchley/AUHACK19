@@ -11,7 +11,7 @@
 
 websocket_session::
 websocket_session(
-    tcp::socket socket,
+    udp::socket socket,
     std::shared_ptr<shared_state> const& state)
     : ws_(std::move(socket))
     , state_(state)

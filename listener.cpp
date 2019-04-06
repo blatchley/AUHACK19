@@ -14,14 +14,14 @@
 listener::
 listener(
     net::io_context& ioc,
-    tcp::endpoint endpoint,
+    udp::endpoint endpoint,
     std::shared_ptr<shared_state> const& state)
     : acceptor_(ioc)
     , socket_(ioc)
     , state_(state)
 {
     error_code ec;
-
+    
     // Open the acceptor
     acceptor_.open(endpoint.protocol(), ec);
     if(ec)
