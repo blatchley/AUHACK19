@@ -55,8 +55,7 @@ var apple = {
 
 // game loop
 function loop() {
-  requestAnimationFrame(loop);
-
+  console.log("calling loop")
   // slow game loop to 15 fps instead of 60 (60/15 = 4)
   if (++count < 4) {
     return;
@@ -146,11 +145,13 @@ var ws = null;
         console.log("[connection closed]\n");
       };
       ws.onmessage = function(ev) {
+        
         // messages.innerText += ev.data + "\n";
         console.log("snake moved " + ev.data + "\n");
         // setdirection(ev.data);
         coords = ev.data.split(',')
         setposition(coords[0], coords[1])
+        loop()
         
       };
       ws.onerror = function(ev) {
