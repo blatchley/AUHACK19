@@ -20,7 +20,7 @@
 */
 class http_session : public std::enable_shared_from_this<http_session>
 {
-    udp::socket socket_;
+    tcp::socket socket_;
     beast::flat_buffer buffer_;
     std::shared_ptr<shared_state> state_;
     http::request<http::string_body> req_;
@@ -32,7 +32,7 @@ class http_session : public std::enable_shared_from_this<http_session>
 
 public:
     http_session(
-        udp::socket socket,
+        tcp::socket socket,
         std::shared_ptr<shared_state> const& state);
 
     void run();

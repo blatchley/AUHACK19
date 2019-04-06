@@ -14,7 +14,7 @@
 listener::
 listener(
     net::io_context& ioc,
-    udp::endpoint endpoint,
+    tcp::endpoint endpoint,
     std::shared_ptr<shared_state> const& state)
     : acceptor_(ioc)
     , socket_(ioc)
