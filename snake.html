@@ -54,7 +54,7 @@ var apple = {
 };
 
 // game loop
-function loop(direction) {
+function loop() {
   requestAnimationFrame(loop);
 
   // slow game loop to 15 fps instead of 60 (60/15 = 4)
@@ -95,6 +95,16 @@ function loop(direction) {
 
   // draw snake one cell at a time
   context.fillStyle = 'green';
+  snake.cells.forEach(function(cell, index) {
+    
+    // drawing 1 px smaller than the grid creates a grid effect in the snake body so you can see how long it is
+    context.fillRect(cell.x, cell.y, grid-1, grid-1);  
+
+    }
+  );
+}
+
+function setdirection(direction) {
   if (direction === "left" && snake.dx === 0) {
     snake.dx = -grid;
     snake.dy = 0;
@@ -114,13 +124,6 @@ function loop(direction) {
     snake.dy = grid;
     snake.dx = 0;
   }
-  snake.cells.forEach(function(cell, index) {
-    
-    // drawing 1 px smaller than the grid creates a grid effect in the snake body so you can see how long it is
-    context.fillRect(cell.x, cell.y, grid-1, grid-1);  
-
-    }
-  );
 }
 
 
@@ -140,7 +143,7 @@ var ws = null;
       ws.onmessage = function(ev) {
         // messages.innerText += ev.data + "\n";
         console.log("snake moved " + ev.data + "\n");
-        requestAnimationFrame(loop(ev.data))
+        setdirection(ev.data);
       };
       ws.onerror = function(ev) {
         messages.innerText += "[error]\n";
@@ -171,7 +174,9 @@ var ws = null;
       }
     }
 
-// requestAnimationFrame(loop);
+  
+
+requestAnimationFrame(loop);
 </script>
 </body>
 </html>
