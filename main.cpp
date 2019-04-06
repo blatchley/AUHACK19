@@ -35,6 +35,7 @@ main(int argc, char* argv[])
     auto address = net::ip::make_address(argv[1]);
     auto port = static_cast<unsigned short>(std::atoi(argv[2]));
     auto doc_root = argv[3];
+    std::shared_ptr<game> gameInstance_ = std::make_shared<game>();
 
     // The io_context is required for all I/O
     net::io_context ioc;
@@ -43,7 +44,7 @@ main(int argc, char* argv[])
     std::make_shared<listener>(
         ioc,
         tcp::endpoint{address, port},
-        std::make_shared<shared_state>(doc_root))->run();
+        std::make_shared<shared_state>(doc_root, gameInstance_))->run();
 
     // Capture SIGINT and SIGTERM to perform a clean shutdown
     net::signal_set signals(ioc, SIGINT, SIGTERM);

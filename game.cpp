@@ -1,4 +1,3 @@
-#include "game.hpp"
 #include <ctime>
 #include "time.h"
 #include "shared_state.hpp"
@@ -12,7 +11,7 @@
     // bool gameRunning;
     // public:
 game::
-game(std::shared_ptr<shared_state> const& state) {
+game() {
     height = 24;
     width = 24;
     headx = 10;
@@ -70,19 +69,21 @@ setDirection(std::string direction) {
     }
 }
 void game::
-render(){
+render(std::shared_ptr<shared_state> const& state){
     std::string str1 = std::to_string(headx);
     std::string str2 = std::to_string(heady);
     std::string str3 = str1 + "," + str2;
-    // shared_state::send(str3);
+    state->send(str3);
 }
 void game::
 reset() {
-    headx, heady = 10;
+    headx = 10;
+    heady = 10;
     dir = RIGHT;
 }
 void game::
-gameloop() {
+gameloop(std::shared_ptr<shared_state> const& state) {
+    
     time_t start = clock();
     double ticktime = 1;
     while (gameRunning) {
@@ -90,7 +91,7 @@ gameloop() {
         if (seconds_since_start > ticktime) {
             start = clock();
             move();
-            render();
+            render(state);
         }
     }
 }
