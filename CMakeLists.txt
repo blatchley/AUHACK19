@@ -51,6 +51,8 @@ file(GLOB APP_FILES
   net.hpp
   shared_state.cpp
   shared_state.hpp
+  game.cpp
+  game.hpp
   websocket_session.cpp
   websocket_session.hpp
   chat_client.html
