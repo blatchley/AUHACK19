@@ -23,7 +23,7 @@
 <body>
     <button class="echo-button" id="connect">Connect</button>
     <button class="echo-button" id="disconnect">Disconnect</button><br>
-    Your Name: <input class="draw-border" id="userName" size=47 style="margin-bottom: 5px;"><br>
+    <!-- Your Name: <input class="draw-border" id="userName" size=47 style="margin-bottom: 5px;"><br> -->
   
 <canvas tabindex='1' width="400" height="400" id="game"></canvas>
 <script>
@@ -65,9 +65,9 @@ function loop() {
   count = 0;
   context.clearRect(0,0,canvas.width,canvas.height);
 
-  // move snake by it's velocity
-  snake.x += snake.dx;
-  snake.y += snake.dy;
+  // // move snake by it's velocity
+  // snake.x += snake.dx;
+  // snake.y += snake.dy;
 
   // wrap snake position horizontally on edge of screen
   if (snake.x < 0) {
@@ -102,6 +102,11 @@ function loop() {
 
     }
   );
+}
+
+function setposition(x, y) {
+  snake.x = x * 16;
+  snake.y = y * 16;
 }
 
 function setdirection(direction) {
@@ -143,7 +148,10 @@ var ws = null;
       ws.onmessage = function(ev) {
         // messages.innerText += ev.data + "\n";
         console.log("snake moved " + ev.data + "\n");
-        setdirection(ev.data);
+        // setdirection(ev.data);
+        coords = ev.data.split(',')
+        setposition(coords[0], coords[1])
+        
       };
       ws.onerror = function(ev) {
         messages.innerText += "[error]\n";

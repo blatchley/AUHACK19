@@ -31,10 +31,10 @@ move() {
         }
     }
     if (dir == UP) {
-        if (heady < 24) {
-            heady++;
+        if (heady > 0) {
+            heady--;
         } else {
-            heady = 0;
+            heady = 24;
         }
     }
     if (dir == RIGHT) {
@@ -45,10 +45,10 @@ move() {
         }
     }
     if (dir == DOWN) {
-        if (heady > 0) {
-            heady--;
+        if (heady < 24) {
+            heady++;
         } else {
-            heady = 24;
+            heady = 0;
         }
     }
 }
