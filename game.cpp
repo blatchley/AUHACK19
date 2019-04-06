@@ -1,6 +1,8 @@
 #include <ctime>
 #include "time.h"
 #include "shared_state.hpp"
+#include <chrono>
+#include <thread>
 
 
     // private:
@@ -84,16 +86,22 @@ reset() {
 void game::
 gameloop(std::shared_ptr<shared_state> const& state) {
     
-    time_t start = clock();
-    double ticktime = 1;
+    auto start = std::chrono::system_clock::now();
+    double ticktime = 67;
     while (gameRunning) {
-        double seconds_since_start = difftime(clock(), start);
+        auto now = std::chrono::system_clock::now();
+        auto seconds_since_start = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
         if (seconds_since_start > ticktime) {
-            start = clock();
+            start = std::chrono::system_clock::now();
             move();
             render(state);
         }
     }
 }
+
+// void game::
+// prepGameThread(std::shared_ptr<shared_state> const& state) {
+//     std::thread gamethread ([this](std::shared_ptr<shared_state> const& state){this->gameloop(state);}, state);
+// }
 
     

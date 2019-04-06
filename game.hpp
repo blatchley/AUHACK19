@@ -18,4 +18,5 @@ class game : public std::enable_shared_from_this<game>
     void move();
     void render(std::shared_ptr<shared_state> const& state);
     void gameloop(std::shared_ptr<shared_state> const& state);
+    // void prepGameThread(std::shared_ptr<shared_state> const& state);
 };

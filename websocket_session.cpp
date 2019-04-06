@@ -68,8 +68,9 @@ on_read(error_code ec, std::size_t)
 
     // Send to all connections
     (state_->gameInstance())->setDirection(beast::buffers_to_string(buffer_.data()));
-    (state_->gameInstance())->move();
-    (state_->gameInstance())->render(state_);
+    // (state_->gameInstance())->move();
+    // (state_->gameInstance())->render(state_);
+    // (state_->gameInstance())->gameloop(state_);
     
     // Clear the buffer
     buffer_.consume(buffer_.size());
