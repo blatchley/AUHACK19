@@ -34,7 +34,6 @@ void
 shared_state::
 send(std::string message)
 {
-    if message == "left"
     auto const ss = std::make_shared<std::string const>(std::move(message));
 
     for(auto session : sessions_)
