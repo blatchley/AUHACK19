@@ -15,6 +15,7 @@ shared_state(std::string doc_root, std::shared_ptr<game> gameInstance)
     : doc_root_(std::move(doc_root)),
     gameInstance_(std::move(gameInstance))
 {
+    
 }
 
 void

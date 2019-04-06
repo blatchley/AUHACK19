@@ -4,7 +4,7 @@
 
 class shared_state;
 
-class game 
+class game : public std::enable_shared_from_this<game>
 {
     int height, width;
     int headx, heady;
