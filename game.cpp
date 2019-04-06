@@ -87,7 +87,7 @@ void game::
 gameloop(std::shared_ptr<shared_state> const& state) {
     
     auto start = std::chrono::system_clock::now();
-    double ticktime = 67;
+    double ticktime = 134;
     while (gameRunning) {
         auto now = std::chrono::system_clock::now();
         auto seconds_since_start = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
