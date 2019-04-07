@@ -1,31 +1,21 @@
-*This repository contains the presentation file and compiling
-source code for the CppCon2018 talk.*
 
-# Get Rich Quick! Using Boost.Beast WebSockets and Networking TS
 
-Do you want to make a lot of money? You'll see some examples of free
-browser and server based WebSocket programs which have earned their
-respective individual authors tens of millions of dollars in no time
-at all. Perhaps after seeing this talk in person, you'll write the
-next massively successful WebSocket app!
+# AUHACK multiplayer snake game
 
-The WebSocket protocol powers the interactive web by enabling two-way
-messaging between the browser and the web server. The Boost.Beast
-library implements this protocol on top of the industry standard
-Boost.Asio library which models the Networking Technical Specification
-proposed for the ISO C++ Standard.
+This is a multiplayer snake game made for AUHACK 2019.
 
-This presentation introduces Networking TS concepts and algorithms,
-how to read their requirements, and how to use them in your programs.
-We will build from scratch a multi-user chat server in C++11 using
-Beast, and the corresponding browser-based chat client in HTML and
-JavaScript. No prior knowledge or understanding of Beast or Asio is
-required, the talk is suited for everyone.
+Made by Frederik Brasch and Adam Blatchley Hansen (https://github.com/killerdogice)
+
+Game consists of a c++ boost::beast web socket server running a c++ game engine, running in docker, on a google cloud linux vm. 
+
+Web hosting is set up at www.competitivesnek.dk, however the hosting has not yet gone through full dns registration, and may not be responsive before the deadline. 
+
+If the website is not active, the google server can be accessed at http://35.243.131.250/, and should remain stable for at least a month or so.
 
 ## Docker Container
-To run this example in a Docker container, simply enter the following commands:
+To run this server in a Docker container, simply enter the following commands:
 ```
 docker build -t cppcon2018-example .
 docker run -d -p 80:80 cppcon2018-example
 ```
-After that, you may observe the example at `localhost:8080`.
+After that, you may observe the example at `localhost:80`.
