@@ -3,6 +3,8 @@
 #include "shared_state.hpp"
 #include <chrono>
 #include <thread>
+#include <sstream>
+#include <iostream>
 
 
     // private:
@@ -14,12 +16,16 @@
     // public:
 game::
 game() {
+    foodx = 12;
+    foody = 12;
     height = 24;
     width = 24;
     headx = 10;
     heady = 10;
     dir = RIGHT;
     gameRunning = true;
+    snakelength = 4;
+    std::vector<snakebody> snakeparts = {snakebody(10, 10)};
 //   gameloop();
 
 }
@@ -53,6 +59,24 @@ move() {
             heady = 0;
         }
     }
+    if (headx == foodx && heady == foody) {
+        snakelength++;
+        updatefood();
+    }
+    if (snakeparts.size() < snakelength) {
+        snakeparts.insert(snakeparts.begin(), snakebody(headx,heady));
+    } else {
+        snakeparts.insert(snakeparts.begin(), snakebody(headx,heady));
+        snakeparts.pop_back();
+    }
+}
+
+void game::
+updatefood() {
+    std::srand(std::time(nullptr)); // use current time as seed for random generator
+    foodx = std::rand() % 24;
+    foody = std::rand() % 24;
+    
 }
 
 void game::
@@ -72,10 +96,17 @@ setDirection(std::string direction) {
 }
 void game::
 render(std::shared_ptr<shared_state> const& state){
-    std::string str1 = std::to_string(headx);
-    std::string str2 = std::to_string(heady);
-    std::string str3 = str1 + "," + str2;
-    state->send(str3);
+    std::ostringstream ss;
+    ss << std::to_string(foodx)+","+std::to_string(foody);
+//    for (auto it = snakeparts.cbegin(); it != snakeparts.cend(); it++) {
+    for ( const auto part: snakeparts ) {
+        ss << "." << part.strrep();
+    }
+
+    // std::string str1 = std::to_string(headx);
+    // std::string str2 = std::to_string(heady);
+    // std::string str3 = str1 + "," + str2;
+    state->send(ss.str());
 }
 void game::
 reset() {
@@ -99,9 +130,5 @@ gameloop(std::shared_ptr<shared_state> const& state) {
     }
 }
 
-// void game::
-// prepGameThread(std::shared_ptr<shared_state> const& state) {
-//     std::thread gamethread ([this](std::shared_ptr<shared_state> const& state){this->gameloop(state);}, state);
-// }
 
     

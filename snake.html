@@ -84,13 +84,13 @@ function loop() {
   //   snake.y = 0;
   // }
 
-  // keep track of where snake has been. front of the array is always the head
-  snake.cells.unshift({x: snake.x, y: snake.y});
+  // // keep track of where snake has been. front of the array is always the head
+  // snake.cells.unshift({x: snake.x, y: snake.y});
 
-  // remove cells as we move away from them
-  if (snake.cells.length > snake.maxCells) {
-    snake.cells.pop();
-  }
+  // // remove cells as we move away from them
+  // if (snake.cells.length > snake.maxCells) {
+  //   snake.cells.pop();
+  // }
 
   // draw snake one cell at a time
   context.fillStyle = 'green';
@@ -98,14 +98,27 @@ function loop() {
     
     // drawing 1 px smaller than the grid creates a grid effect in the snake body so you can see how long it is
     context.fillRect(cell.x, cell.y, grid-1, grid-1);  
+    console.log("filling rectangle " + cell.x + ", " + cell.y)
 
     }
   );
+
+  context.fillStyle = 'yellow';
+  context.fillRect(apple.x, apple.y, grid-1, grid-1);  
+
 }
 
-function setposition(x, y) {
-  snake.x = x * 16;
-  snake.y = y * 16;
+function setposition(sliceofpositiontuples) {
+  snake.cells = []
+  for (index = 0; index < sliceofpositiontuples.length; index++) { 
+    parts = sliceofpositiontuples[index].slice(",")
+    snake.cells.unshift({x: (parts[0] * 16), y: (parts[1] * 16)});
+} 
+}
+
+function setapple(x,y) {
+  apple.x = x*16
+  apple.y = y*16
 }
 
 function setdirection(direction) {
@@ -147,10 +160,12 @@ var ws = null;
       ws.onmessage = function(ev) {
         
         // messages.innerText += ev.data + "\n";
-        // console.log("snake moved " + ev.data + "\n");
+        console.log("receive: " + ev.data + "\n");
         // setdirection(ev.data);
-        coords = ev.data.split(',')
-        setposition(coords[0], coords[1])
+        elements = ev.data.split('.');
+        applecoords = elements[0].split(',');
+        setapple(applecoords[0], applecoords[1]);
+        setposition(elements.slice(1));
         loop()
         
       };
