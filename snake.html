@@ -48,6 +48,21 @@ var snake = {
   // length of the snake. grows when eating an apple
   maxCells: 4
 };
+
+var snake2 = {
+  x: 160,
+  y: 160,
+  
+  // snake velocity. moves one grid length every frame in either the x or y direction
+  dx: grid,
+  dy: 0,
+  
+  // keep track of all grids the snake body occupies
+  cells: [],
+  
+  // length of the snake. grows when eating an apple
+  maxCells: 4
+};
 var apple = {
   x: 320,
   y: 320
@@ -101,6 +116,18 @@ function loop() {
     // console.log("filling rectangle " + cell.x + ", " + cell.y)
 
     }
+
+  );
+
+  context.fillStyle = 'red';
+  snake2.cells.forEach(function(cell, index) {
+    
+    // drawing 1 px smaller than the grid creates a grid effect in the snake body so you can see how long it is
+    context.fillRect(cell.x, cell.y, grid-1, grid-1);  
+    // console.log("filling rectangle " + cell.x + ", " + cell.y)
+
+    }
+    
   );
 
   context.fillStyle = 'yellow';
@@ -116,6 +143,13 @@ function setposition(sliceofpositiontuples) {
 } 
 }
 
+function setposition2(sliceofpositiontuples) {
+  snake2.cells = []
+  for (index = 0; index < sliceofpositiontuples.length; index++) { 
+    parts = sliceofpositiontuples[index].split(",")
+    snake2.cells.unshift({x: (parts[0] * 16), y: (parts[1] * 16)});
+} 
+}
 function setapple(x,y) {
   apple.x = x*16
   apple.y = y*16
@@ -162,10 +196,13 @@ var ws = null;
         // messages.innerText += ev.data + "\n";
         // console.log("receive: " + ev.data + "\n");
         // setdirection(ev.data);
-        elements = ev.data.split('.');
+        snakes = ev.data.split('@')
+        elements = snakes[0]('.');
         applecoords = elements[0].split(',');
         setapple(applecoords[0], applecoords[1]);
         setposition(elements.slice(1));
+        snake2coords = snakes[1].split('.')
+        setposition2(snake2coords)
         loop()
         
       };
@@ -194,8 +231,26 @@ var ws = null;
         str += "down"
       }
       if (str != "") {
+        str = 1 + str;
+        ws.send(str)
+      } else {
+        if (event.keyCode === 65) {
+        str += "left"
+      }
+      if (event.keyCode === 87) {
+        str += "up"
+      }
+      if (event.keyCode === 68) {
+        str += "right"
+      }
+      if (event.keyCode === 83) {
+        str += "down"
+      }
+      if (str != "") {
+        str = 2 + str;
         ws.send(str)
       }
+    }
     }
 
   

@@ -24,18 +24,22 @@ class game : public std::enable_shared_from_this<game>
     // food foodtoken;
     int foodx, foody;
     int height, width;
-    int headx, heady;
-    int snakelength;
+    int headx, heady, headx2, heady2;
+    int snakelength, snakelength2;
     std::vector <snakebody> snakeparts;
+    std::vector <snakebody> snakeparts2;
     enum eDirection {STOP, LEFT, RIGHT, UP, DOWN};
     eDirection dir;
+    eDirection dir2;
     bool gameRunning;
     public:
     game();
-    void setDirection(std::string direction);
+    void setDirection(std::string directionfull);
+    void setDirection2(std::string direction);
     void updatefood();
     void reset();
     void move();
+    void move2();
     void render(std::shared_ptr<shared_state> const& state);
     void gameloop(std::shared_ptr<shared_state> const& state);
     // void prepGameThread(std::shared_ptr<shared_state> const& state);
