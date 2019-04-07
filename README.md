@@ -35,4 +35,4 @@ docker run -d -p 80:80 cppcon2018-example
 ```
 After that, you may observe the example at `localhost:80`.
 
-## Special thanks to the AUHACK wizards for their assistance with various c++ issues.
+-Special thanks to the AUHACK wizards for their assistance with various c++ issues.
