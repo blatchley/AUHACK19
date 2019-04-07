@@ -29,8 +29,11 @@ game() {
 //   gameloop();
 
 }
+
+
 void game::
 move() {
+
     if (dir == LEFT) {
         if (headx > 1) {
             headx--;
@@ -59,6 +62,7 @@ move() {
             heady = 0;
         }
     }
+    
     if (headx == foodx && heady == foody) {
         snakelength++;
         updatefood();
@@ -69,50 +73,64 @@ move() {
         snakeparts.insert(snakeparts.begin(), snakebody(headx,heady));
         snakeparts.pop_back();
     }
+    
 }
 
 void game::
 updatefood() {
     std::srand(std::time(nullptr)); // use current time as seed for random generator
-    foodx = std::rand() % 24;
-    foody = std::rand() % 24;
+    foodx = std::rand() % 22 + 1;
+    foody = std::rand() % 22 + 1;
     
 }
 
 void game::
 setDirection(std::string direction) {
-    if (direction == "left") {
+    if (direction == "left" && dir != RIGHT) {
         dir = LEFT;
     }
-    if (direction == "up") {
+    if (direction == "up" && dir != DOWN) {
         dir = UP;
     }
-    if (direction == "right") {
+    if (direction == "right" && dir != LEFT) {
         dir = RIGHT;
     }
-    if (direction == "down") {
+    if (direction == "down" && dir != UP) {
         dir = DOWN;
     }
 }
+
 void game::
 render(std::shared_ptr<shared_state> const& state){
+    int death = 0;
     std::ostringstream ss;
     ss << std::to_string(foodx)+","+std::to_string(foody);
 //    for (auto it = snakeparts.cbegin(); it != snakeparts.cend(); it++) {
     for ( const auto part: snakeparts ) {
         ss << "." << part.strrep();
+        if (part.x == headx && part.y == heady) {
+            death += 1;
+        }
     }
 
-    // std::string str1 = std::to_string(headx);
-    // std::string str2 = std::to_string(heady);
-    // std::string str3 = str1 + "," + str2;
+    //detects overlap and kills
     state->send(ss.str());
+    if (death > 1) {
+        reset();
+    }
 }
 void game::
 reset() {
+    foodx = 12;
+    foody = 12;
+    height = 24;
+    width = 24;
     headx = 10;
     heady = 10;
     dir = RIGHT;
+    gameRunning = true;
+    snakelength = 4;
+    snakeparts = {snakebody(10, 10)};
 }
 void game::
 gameloop(std::shared_ptr<shared_state> const& state) {
