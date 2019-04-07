@@ -22,6 +22,7 @@ game() {
     width = 24;
     headx = 10;
     heady = 10;
+    prevdir = RIGHT;
     dir = RIGHT;
     gameRunning = true;
     snakelength = 4;
@@ -29,6 +30,7 @@ game() {
     headx2 = 14;
     heady2 = 14;
     dir2 = LEFT;
+    prevdir2 = LEFT;
     snakelength2 = 4;
     std::vector<snakebody> snakeparts2 = {snakebody(14, 14)};
 //   gameloop();
@@ -77,6 +79,7 @@ move() {
         snakeparts.insert(snakeparts.begin(), snakebody(headx,heady));
         snakeparts.pop_back();
     }
+    prevdir = dir;
     
 }
 
@@ -121,6 +124,7 @@ move2() {
         snakeparts2.insert(snakeparts2.begin(), snakebody(headx2,heady2));
         snakeparts2.pop_back();
     }
+    prevdir2 = dir2;
     
 }
 
@@ -138,16 +142,16 @@ setDirection(std::string directionfull) {
     std::string prefix = directionfull.substr(0,1);
     std::string comparator = "1";
     if (prefix == comparator) {
-    if (direction2 == "left" && dir != RIGHT) {
+    if (direction2 == "left" && prevdir != RIGHT) {
         dir = LEFT;
     }
-    if (direction2 == "up" && dir != DOWN) {
+    if (direction2 == "up" && prevdir != DOWN) {
         dir = UP;
     }
-    if (direction2 == "right" && dir != LEFT) {
+    if (direction2 == "right" && prevdir != LEFT) {
         dir = RIGHT;
     }
-    if (direction2 == "down" && dir != UP) {
+    if (direction2 == "down" && prevdir != UP) {
         dir = DOWN;
     }
     } else {
@@ -157,16 +161,16 @@ setDirection(std::string directionfull) {
 
 void game::
 setDirection2(std::string direction) {
-    if (direction == "left" && dir2 != RIGHT) {
+    if (direction == "left" && prevdir2 != RIGHT) {
         dir2 = LEFT;
     }
-    if (direction == "up" && dir2 != DOWN) {
+    if (direction == "up" && prevdir2 != DOWN) {
         dir2 = UP;
     }
-    if (direction == "right" && dir2 != LEFT) {
+    if (direction == "right" && prevdir2 != LEFT) {
         dir2 = RIGHT;
     }
-    if (direction == "down" && dir2 != UP) {
+    if (direction == "down" && prevdir2 != UP) {
         dir2 = DOWN;
     }
 }

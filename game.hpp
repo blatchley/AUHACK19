@@ -29,7 +29,9 @@ class game : public std::enable_shared_from_this<game>
     std::vector <snakebody> snakeparts;
     std::vector <snakebody> snakeparts2;
     enum eDirection {STOP, LEFT, RIGHT, UP, DOWN};
+    eDirection prevdir;
     eDirection dir;
+    eDirection prevdir2;
     eDirection dir2;
     bool gameRunning;
     public:
