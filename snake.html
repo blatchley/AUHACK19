@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <style>
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body { 
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  canvas {
+    border: 1px solid white;
+  }
+  </style>
+</head>
+<body>
+    <button class="echo-button" id="connect">Connect</button>
+    <button class="echo-button" id="disconnect">Disconnect</button><br>
+    <!-- Your Name: <input class="draw-border" id="userName" size=47 style="margin-bottom: 5px;"><br> -->
+  
+<canvas tabindex='1' width="400" height="400" id="game"></canvas>
+<script>
+
+var canvas = document.getElementById('game');
+var context = canvas.getContext('2d');
+
+var grid = 16;
+var count = 0;
+  
+var snake = {
+  x: 160,
+  y: 160,
+  
+  // snake velocity. moves one grid length every frame in either the x or y direction
+  dx: grid,
+  dy: 0,
+  
+  // keep track of all grids the snake body occupies
+  cells: [],
+  
+  // length of the snake. grows when eating an apple
+  maxCells: 4
+};
+
+var snake2 = {
+  x: 160,
+  y: 160,
+  
+  // snake velocity. moves one grid length every frame in either the x or y direction
+  dx: grid,
+  dy: 0,
+  
+  // keep track of all grids the snake body occupies
+  cells: [],
+  
+  // length of the snake. grows when eating an apple
+  maxCells: 4
+};
+var apple = {
+  x: 320,
+  y: 320
+};
+
+// game loop
+function loop() {
+  // console.log("calling loop")
+  // slow game loop to 15 fps instead of 60 (60/15 = 4)
+  // if (++count < 4) {
+  //   return;
+  // }
+
+  // count = 0;
+  context.clearRect(0,0,canvas.width,canvas.height);
+
+  // // move snake by it's velocity
+  // snake.x += snake.dx;
+  // snake.y += snake.dy;
+
+  // // wrap snake position horizontally on edge of screen
+  // if (snake.x < 0) {
+  //   snake.x = canvas.width - grid;
+  // }
+  // else if (snake.x >= canvas.width) {
+  //   snake.x = 0;
+  // }
+  
+  // // wrap snake position vertically on edge of screen
+  // if (snake.y < 0) {
+  //   snake.y = canvas.height - grid;
+  // }
+  // else if (snake.y >= canvas.height) {
+  //   snake.y = 0;
+  // }
+
+  // // keep track of where snake has been. front of the array is always the head
+  // snake.cells.unshift({x: snake.x, y: snake.y});
+
+  // // remove cells as we move away from them
+  // if (snake.cells.length > snake.maxCells) {
+  //   snake.cells.pop();
+  // }
+
+  // draw snake one cell at a time
+  context.fillStyle = 'green';
+  snake.cells.forEach(function(cell, index) {
+    
+    // drawing 1 px smaller than the grid creates a grid effect in the snake body so you can see how long it is
+    context.fillRect(cell.x, cell.y, grid-1, grid-1);  
+    // console.log("filling rectangle " + cell.x + ", " + cell.y)
+
+    }
+
+  );
+
+  context.fillStyle = 'red';
+  snake2.cells.forEach(function(cell, index) {
+    
+    // drawing 1 px smaller than the grid creates a grid effect in the snake body so you can see how long it is
+    context.fillRect(cell.x, cell.y, grid-1, grid-1);  
+    // console.log("filling rectangle " + cell.x + ", " + cell.y)
+
+    }
+    
+  );
+
+  context.fillStyle = 'yellow';
+  context.fillRect(apple.x, apple.y, grid-1, grid-1);  
+
+}
+
+function setposition(sliceofpositiontuples) {
+  snake.cells = []
+  for (index = 0; index < sliceofpositiontuples.length; index++) { 
+    parts = sliceofpositiontuples[index].split(",")
+    snake.cells.unshift({x: (parts[0] * 16), y: (parts[1] * 16)});
+} 
+}
+
+function setposition2(sliceofpositiontuples) {
+  snake2.cells = []
+  for (index = 0; index < sliceofpositiontuples.length; index++) { 
+    parts = sliceofpositiontuples[index].split(",")
+    snake2.cells.unshift({x: (parts[0] * 16), y: (parts[1] * 16)});
+} 
+}
+function setapple(x,y) {
+  apple.x = x*16
+  apple.y = y*16
+}
+
+function setdirection(direction) {
+  if (direction === "left" && snake.dx === 0) {
+    snake.dx = -grid;
+    snake.dy = 0;
+  }
+  // up arrow key
+  else if (direction === "up" && snake.dy === 0) {
+    snake.dy = -grid;
+    snake.dx = 0;
+  }
+  // right arrow key
+  else if (direction === "right" && snake.dx === 0) {
+    snake.dx = grid;
+    snake.dy = 0;
+  }
+  // down arrow key
+  else if (direction === "down" && snake.dy === 0) {
+    snake.dy = grid;
+    snake.dx = 0;
+  }
+}
+
+
+// start the game
+
+  
+var ws = null;
+    
+    connect.onclick = function() {
+      ws = new WebSocket("ws://35.243.131.250:80");
+      ws.onopen = function(ev) {
+        console.log("[connection opened]\n");
+      };
+      ws.onclose = function(ev) {
+        console.log("[connection closed]\n");
+      };
+      ws.onmessage = function(ev) {
+        
+        // messages.innerText += ev.data + "\n";
+        // console.log("receive: " + ev.data + "\n");
+        // setdirection(ev.data);
+        snakes = ev.data.split('@')
+        elements = snakes[0].split('.');
+        applecoords = elements[0].split(',');
+        setapple(applecoords[0], applecoords[1]);
+        setposition(elements.slice(1));
+        snake2coords = snakes[1].split('.')
+        setposition2(snake2coords)
+        loop()
+        
+      };
+      ws.onerror = function(ev) {
+        messages.innerText += "[error]\n";
+        console.log(ev);
+      };
+    };
+    disconnect.onclick = function() {
+      ws.close();
+    };
+    canvas.onkeydown = function(ev) {
+      console.log("onkeydownpressed")
+      ev.preventDefault();
+      str = ""
+      if (event.keyCode === 37) {
+        str += "left"
+      }
+      if (event.keyCode === 38) {
+        str += "up"
+      }
+      if (event.keyCode === 39) {
+        str += "right"
+      }
+      if (event.keyCode === 40) {
+        str += "down"
+      }
+      if (str != "") {
+        str = 1 + str;
+        ws.send(str)
+      } else {
+        if (event.keyCode === 65) {
+        str += "left"
+      }
+      if (event.keyCode === 87) {
+        str += "up"
+      }
+      if (event.keyCode === 68) {
+        str += "right"
+      }
+      if (event.keyCode === 83) {
+        str += "down"
+      }
+      if (str != "") {
+        str = 2 + str;
+        ws.send(str)
+      }
+    }
+    }
+
+  
+
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

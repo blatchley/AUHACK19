@@ -10,6 +10,7 @@
 #include "listener.hpp"
 #include "http_session.hpp"
 #include <iostream>
+#include <thread>
 
 listener::
 listener(
@@ -20,6 +21,14 @@ listener(
     , socket_(ioc)
     , state_(state)
 {
+    // std::shared_ptr<game> gameInstance_ = (state_->gameInstance());
+    // gameInstance_->prepGameThread(state_);
+    // pthread_t t1;
+    // pthread_create(&t1, NULL, &gameInstance_->gameloop, state_);
+    // std::async(std::launch::async, *gameInstance_->gameloop, (state_));
+    
+    // // std::thread gamethread (std::mem_fun((state_->gameInstance())->gameloop), std::ref(state_));
+
     error_code ec;
     
     // Open the acceptor

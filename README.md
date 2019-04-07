@@ -26,6 +26,6 @@ required, the talk is suited for everyone.
 To run this example in a Docker container, simply enter the following commands:
 ```
 docker build -t cppcon2018-example .
-docker run -d -p 8080:8080 cppcon2018-example
+docker run -d -p 80:80 cppcon2018-example
 ```
 After that, you may observe the example at `localhost:8080`.

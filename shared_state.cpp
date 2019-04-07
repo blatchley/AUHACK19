@@ -11,9 +11,11 @@
 #include "websocket_session.hpp"
 
 shared_state::
-shared_state(std::string doc_root)
-    : doc_root_(std::move(doc_root))
+shared_state(std::string doc_root, std::shared_ptr<game> gameInstance)
+    : doc_root_(std::move(doc_root)),
+    gameInstance_(std::move(gameInstance))
 {
+    
 }
 
 void
