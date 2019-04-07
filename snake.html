@@ -197,7 +197,7 @@ var ws = null;
         // console.log("receive: " + ev.data + "\n");
         // setdirection(ev.data);
         snakes = ev.data.split('@')
-        elements = snakes[0]('.');
+        elements = snakes[0].split('.');
         applecoords = elements[0].split(',');
         setapple(applecoords[0], applecoords[1]);
         setposition(elements.slice(1));
