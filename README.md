@@ -4,7 +4,7 @@
 
 This is a multiplayer snake game made for AUHACK 2019.
 
-Made by Frederik Brasch and Adam Blatchley Hansen (https://github.com/killerdogice)
+Made by Frederik Brasch (https://github.com/FrederikBrasch) and Adam Blatchley Hansen (https://github.com/killerdogice)
 
 Game consists of a c++ boost::beast web socket server running a basic c++ game engine, running in docker, on a google cloud linux vm. The webpage is served with basic html and javascript. 
 
