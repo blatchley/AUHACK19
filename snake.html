@@ -98,7 +98,7 @@ function loop() {
     
     // drawing 1 px smaller than the grid creates a grid effect in the snake body so you can see how long it is
     context.fillRect(cell.x, cell.y, grid-1, grid-1);  
-    console.log("filling rectangle " + cell.x + ", " + cell.y)
+    // console.log("filling rectangle " + cell.x + ", " + cell.y)
 
     }
   );
@@ -111,7 +111,7 @@ function loop() {
 function setposition(sliceofpositiontuples) {
   snake.cells = []
   for (index = 0; index < sliceofpositiontuples.length; index++) { 
-    parts = sliceofpositiontuples[index].slice(",")
+    parts = sliceofpositiontuples[index].split(",")
     snake.cells.unshift({x: (parts[0] * 16), y: (parts[1] * 16)});
 } 
 }
@@ -160,7 +160,7 @@ var ws = null;
       ws.onmessage = function(ev) {
         
         // messages.innerText += ev.data + "\n";
-        console.log("receive: " + ev.data + "\n");
+        // console.log("receive: " + ev.data + "\n");
         // setdirection(ev.data);
         elements = ev.data.split('.');
         applecoords = elements[0].split(',');
