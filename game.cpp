@@ -16,9 +16,14 @@
     // bool gameRunning;
     // public:
 game::
-game() :
-    snake1(10, 10, snake_instance::eDirection::RIGHT),
-    snake2(14, 14, snake_instance::eDirection::LEFT) {
+game()
+//  :
+//     snake1(10, 10, snake_instance::eDirection::RIGHT),
+//     snake2(14, 14, snake_instance::eDirection::LEFT) 
+    {
+    std::cout << "game constructor called";
+    snake_list.push_back(snake_instance(10, 10, snake_instance::eDirection::RIGHT));
+    snake_list.push_back(snake_instance(14, 14, snake_instance::eDirection::LEFT));
     foodx = 12;
     foody = 12;
     height = 24;
@@ -43,16 +48,24 @@ game() :
 
 void game::
 moveall() {
-    snake1.move();
-    snake2.move();
-    if (snake1.headxx == foodx && snake1.headyy == foody) {
-        snake1.grow();
+
+    for ( auto part: snake_list) {
+        part.move();
+        if (part.headxx == foodx && part.headyy == foody) {
+        part.grow();
         updatefood();
     }
-    if (snake2.headxx == foodx && snake2.headyy == foody) {
-        snake2.grow();
-        updatefood();
     }
+    // snake1.move();
+    // snake2.move();
+    // if (snake1.headxx == foodx && snake1.headyy == foody) {
+    //     snake1.grow();
+    //     updatefood();
+    // }
+    // if (snake2.headxx == foodx && snake2.headyy == foody) {
+    //     snake2.grow();
+    //     updatefood();
+    // }
 }
 
 void game::
@@ -74,60 +87,59 @@ setDirection(std::string directionfull) {
     if (direction2 == "down") {dir = snake_instance::eDirection::DOWN;}
     
     if (prefix == comparator) {
-        snake1.setDirection(dir);
+        snake_list[0].setDirection(dir);
     } else {
-        snake2.setDirection(dir);
+        snake_list[1].setDirection(dir);
     }
 }
 
 void game::
 render(std::shared_ptr<shared_state> const& state){
     int death = 0;
-    int death2 = 0;
+    // int death2 = 0;
     std::ostringstream ss;
     ss << std::to_string(foodx)+","+std::to_string(foody);
 //    for (auto it = snakeparts.cbegin(); it != snakeparts.cend(); it++) {
-    for ( const auto part: snake1.get_body()) {
+    for ( snake_instance snake: snake_list) {
+        std::cout << "iterating through list of snakes\n";
+        std::cout << snake_list.size() << "\n";
+        std::cout << snake.get_body().size() << "\n";
+       
+
+    for ( const snake_instance::snakebody part: snake.get_body()) {
+        std::cout << "iterating through snake body parts\n";
         ss << "." << part.strrep();
-        if (part.x == snake1.headxx && part.y == snake1.headyy) {
-            death += 1;
-        }
-        if (part.x == snake2.headxx && part.y == snake2.headyy) {
-            death += 1;
-        }
+        // if (part.x == snake.headxx && part.y == snake.headyy) {
+            // death += 1;
+        // }
     }
 
     ss << "@";
-    for ( const auto part: snake2.get_body() ) {
-        ss << "." << part.strrep();
-        if (part.x == snake2.headxx && part.y == snake2.headyy) {
-            death2 += 1;
-        }
-        if (part.x == snake1.headxx && part.y == snake1.headyy) {
-            death2 += 1;
-        }
     }
-
     //detects overlap and kills
-    state->send(ss.str());
-    if (death > 1) {
+    std::string message = ss.str();
+    message.pop_back();
+    state->send(message);
+    if (death > 2) {
         reset();
     }
-    if (death2 > 1) {
-        reset();
-    }
+    // if (death2 > 1) {
+    //     reset();
+    // }
 }
 void game::
 reset() {
+    std::cout << "game reset";
+    std::this_thread::sleep_for(std::chrono::milliseconds(330));
     foodx = 12;
     foody = 12;
     height = 24;
     width = 24;
-    dir = snake_instance::eDirection::RIGHT;
-    snake1.reset(10, 10, dir);
-    dir = snake_instance::eDirection::LEFT;
-    snake2.reset(14, 14, dir);
+    snake_list[0].reset(10,10,snake_instance::eDirection::RIGHT);
+    snake_list[1].reset(14,14,snake_instance::eDirection::LEFT);
     gameRunning = true;
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
+             
 }
 void game::
 gameloop(std::shared_ptr<shared_state> const& state) {

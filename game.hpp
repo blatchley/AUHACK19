@@ -9,11 +9,10 @@ class shared_state;
 
 class game : public std::enable_shared_from_this<game>
 {     
-    
-        
     // food foodtoken;
-    snake_instance snake1;
-    snake_instance snake2;
+    // snake_instance snake1;
+    // snake_instance snake2;
+    std::vector <snake_instance> snake_list;
     int foodx, foody;
     int height, width;
     bool gameRunning;

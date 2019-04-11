@@ -15,7 +15,7 @@ snake_instance(int headx, int heady, eDirection direction) {
     dir = direction;
     prevdir = direction;
     snakelength = 4;
-    std::vector<snakebody> snakeparts = {snakebody(headxx, headyy)};
+    snakeparts = {snakebody(headxx, headyy)};
 
 }
 
@@ -83,17 +83,17 @@ grow() {
 }
 
 void snake_instance::
-reset(int x,int y, eDirection dir) {
+reset(int x,int y, eDirection newdir) {
     headxx = x;
     headyy = y;
     prevdir = dir;
     snakelength = 4;
-    dir = dir;
-    std::vector<snakebody> snakeparts = {snakebody(headxx, headyy)};
+    dir = newdir;
+    snakeparts = {snakebody(headxx, headyy)};
 }
 
 
-std::vector<snake_instance::snakebody> snake_instance:: 
+const std::vector<snake_instance::snakebody> snake_instance:: 
 get_body() {
     return snakeparts;
 }

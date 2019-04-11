@@ -31,6 +31,6 @@ class snake_instance
     void setDirection(eDirection direction);
     void move();
     void grow();
-    std::vector<snakebody> get_body();
+    const std::vector<snakebody> get_body();
     void reset(int x, int y, eDirection dir);
 };
