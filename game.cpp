@@ -7,6 +7,7 @@
 #include <iostream>
 
 
+
     // private:
     // int height, width;
     // int headx, heady;
@@ -73,7 +74,7 @@ move() {
         snakelength++;
         updatefood();
     }
-    if (snakeparts.size() < snakelength) {
+    if (snakeparts.size() < static_cast<unsigned int>(snakelength)) {
         snakeparts.insert(snakeparts.begin(), snakebody(headx,heady));
     } else {
         snakeparts.insert(snakeparts.begin(), snakebody(headx,heady));
@@ -118,7 +119,7 @@ move2() {
         snakelength2++;
         updatefood();
     }
-    if (snakeparts2.size() < snakelength2) {
+    if (snakeparts2.size() < static_cast<unsigned int>(snakelength2)) {
         snakeparts2.insert(snakeparts2.begin(), snakebody(headx2,heady2));
     } else {
         snakeparts2.insert(snakeparts2.begin(), snakebody(headx2,heady2));
@@ -233,17 +234,21 @@ reset() {
 void game::
 gameloop(std::shared_ptr<shared_state> const& state) {
     
-    auto start = std::chrono::system_clock::now();
+    auto start = std::chrono::high_resolution_clock::now();
     double ticktime = 134;
     while (gameRunning) {
-        auto now = std::chrono::system_clock::now();
+        auto now = std::chrono::high_resolution_clock::now();
         auto seconds_since_start = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
-        if (seconds_since_start > ticktime) {
-            start = std::chrono::system_clock::now();
+        if (seconds_since_start < ticktime) {
+             if ((ticktime - seconds_since_start) > 40) {
+             std::this_thread::sleep_for(std::chrono::milliseconds(30));
+             }
+        } else {
+            start = std::chrono::high_resolution_clock::now();
             move();
             move2();
             render(state);
-        }
+        }   
     }
 }
 

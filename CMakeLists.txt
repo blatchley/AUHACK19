@@ -43,6 +43,8 @@ source_group(TREE ${Boost_INCLUDE_DIRS}/boost/beast PREFIX beast FILES ${BEAST_F
 
 file(GLOB APP_FILES
   beast.hpp
+  game.cpp
+  game.hpp
   http_session.cpp
   http_session.hpp
   listener.cpp
@@ -51,8 +53,6 @@ file(GLOB APP_FILES
   net.hpp
   shared_state.cpp
   shared_state.hpp
-  game.cpp
-  game.hpp
   websocket_session.cpp
   websocket_session.hpp
   chat_client.html
