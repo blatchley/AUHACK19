@@ -27,7 +27,7 @@ class snake_instance
     eDirection prevdir;
     eDirection dir;
 
-    snake_instance(std::string id, int headx, int heady, eDirection direction);
+    snake_instance(int headx, int heady, eDirection direction);
     void setDirection(eDirection direction);
     void move();
     void grow();

@@ -2,13 +2,19 @@
 #include <string>
 
 snake_instance::
-snake_instance(std::string id, int headx, int heady, eDirection direction) {
-    name = id;
+snake_instance(int headx, int heady, eDirection direction) {
+    // name = id;
     headxx = headx;
     headyy = heady;
+    // eDirection startdir = RIGHT;
+    // if (direction == 1) {
+    //     startdir = RIGHT;
+    // } else if (direction == 2) {
+    //     startdir = LEFT;
+    // }
+    dir = direction;
     prevdir = direction;
     snakelength = 4;
-    dir = direction;
     std::vector<snakebody> snakeparts = {snakebody(headxx, headyy)};
 
 }
@@ -59,6 +65,7 @@ move() {
             headyy = 0;
         }
     }
+    
 
     if (snakeparts.size() < static_cast<unsigned int>(snakelength)) {
         snakeparts.insert(snakeparts.begin(), snakebody(headxx,headyy));

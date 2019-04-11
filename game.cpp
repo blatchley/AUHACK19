@@ -16,122 +16,43 @@
     // bool gameRunning;
     // public:
 game::
-game() {
+game() :
+    snake1(10, 10, snake_instance::eDirection::RIGHT),
+    snake2(14, 14, snake_instance::eDirection::LEFT) {
     foodx = 12;
     foody = 12;
     height = 24;
     width = 24;
-    headx = 10;
-    heady = 10;
-    prevdir = RIGHT;
-    dir = RIGHT;
+    dir = snake_instance::eDirection::RIGHT;
     gameRunning = true;
-    snakelength = 4;
-    std::vector<snakebody> snakeparts = {snakebody(10, 10)};
-    headx2 = 14;
-    heady2 = 14;
-    dir2 = LEFT;
-    prevdir2 = LEFT;
-    snakelength2 = 4;
-    std::vector<snakebody> snakeparts2 = {snakebody(14, 14)};
-//   gameloop();
+//     headx = 10;
+//     heady = 10;
+//     prevdir = RIGHT;
+//     dir = RIGHT;
+//     snakelength = 4;
+//     std::vector<snakebody> snakeparts = {snakebody(10, 10)};
+//     headx2 = 14;
+//     heady2 = 14;
+//     dir2 = LEFT;
+//     prevdir2 = LEFT;
+//     snakelength2 = 4;
+//     std::vector<snakebody> snakeparts2 = {snakebody(14, 14)};
+// //   gameloop();
 
 }
 
 void game::
 moveall() {
-    move();
-    move2();
-}
-
-void game::
-move() {
-    if (dir == LEFT) {
-        if (headx > 1) {
-            headx--;
-        } else {
-            headx = 24;
-        }
-    }
-    if (dir == UP) {
-        if (heady > 0) {
-            heady--;
-        } else {
-            heady = 24;
-        }
-    }
-    if (dir == RIGHT) {
-        if (headx < 24) {
-            headx++;
-        } else {
-            headx = 0;
-        }
-    }
-    if (dir == DOWN) {
-        if (heady < 24) {
-            heady++;
-        } else {
-            heady = 0;
-        }
-    }
-    
-    if (headx == foodx && heady == foody) {
-        snakelength++;
+    snake1.move();
+    snake2.move();
+    if (snake1.headxx == foodx && snake1.headyy == foody) {
+        snake1.grow();
         updatefood();
     }
-    if (snakeparts.size() < static_cast<unsigned int>(snakelength)) {
-        snakeparts.insert(snakeparts.begin(), snakebody(headx,heady));
-    } else {
-        snakeparts.insert(snakeparts.begin(), snakebody(headx,heady));
-        snakeparts.pop_back();
-    }
-    prevdir = dir;
-    
-}
-
-void game::
-move2() {
-    if (dir2 == LEFT) {
-        if (headx2 > 1) {
-            headx2--;
-        } else {
-            headx2 = 24;
-        }
-    }
-    if (dir2 == UP) {
-        if (heady2 > 0) {
-            heady2--;
-        } else {
-            heady2 = 24;
-        }
-    }
-    if (dir2 == RIGHT) {
-        if (headx2 < 24) {
-            headx2++;
-        } else {
-            headx2 = 0;
-        }
-    }
-    if (dir2 == DOWN) {
-        if (heady2 < 24) {
-            heady2++;
-        } else {
-            heady2 = 0;
-        }
-    }
-    
-    if (headx2 == foodx && heady2 == foody) {
-        snakelength2++;
+    if (snake2.headxx == foodx && snake2.headyy == foody) {
+        snake2.grow();
         updatefood();
     }
-    if (snakeparts2.size() < static_cast<unsigned int>(snakelength2)) {
-        snakeparts2.insert(snakeparts2.begin(), snakebody(headx2,heady2));
-    } else {
-        snakeparts2.insert(snakeparts2.begin(), snakebody(headx2,heady2));
-        snakeparts2.pop_back();
-    }
-    prevdir2 = dir2;
-    
 }
 
 void game::
@@ -147,37 +68,15 @@ setDirection(std::string directionfull) {
     std::string direction2 = directionfull.substr(1);
     std::string prefix = directionfull.substr(0,1);
     std::string comparator = "1";
+    if (direction2 == "left") {dir = snake_instance::eDirection::LEFT;}
+    if (direction2 == "right") {dir = snake_instance::eDirection::RIGHT;}
+    if (direction2 == "up") {dir = snake_instance::eDirection::UP;}
+    if (direction2 == "down") {dir = snake_instance::eDirection::DOWN;}
+    
     if (prefix == comparator) {
-    if (direction2 == "left" && prevdir != RIGHT) {
-        dir = LEFT;
-    }
-    if (direction2 == "up" && prevdir != DOWN) {
-        dir = UP;
-    }
-    if (direction2 == "right" && prevdir != LEFT) {
-        dir = RIGHT;
-    }
-    if (direction2 == "down" && prevdir != UP) {
-        dir = DOWN;
-    }
+        snake1.setDirection(dir);
     } else {
-        setDirection2(direction2);
-    }
-}
-
-void game::
-setDirection2(std::string direction) {
-    if (direction == "left" && prevdir2 != RIGHT) {
-        dir2 = LEFT;
-    }
-    if (direction == "up" && prevdir2 != DOWN) {
-        dir2 = UP;
-    }
-    if (direction == "right" && prevdir2 != LEFT) {
-        dir2 = RIGHT;
-    }
-    if (direction == "down" && prevdir2 != UP) {
-        dir2 = DOWN;
+        snake2.setDirection(dir);
     }
 }
 
@@ -188,23 +87,23 @@ render(std::shared_ptr<shared_state> const& state){
     std::ostringstream ss;
     ss << std::to_string(foodx)+","+std::to_string(foody);
 //    for (auto it = snakeparts.cbegin(); it != snakeparts.cend(); it++) {
-    for ( const auto part: snakeparts ) {
+    for ( const auto part: snake1.get_body()) {
         ss << "." << part.strrep();
-        if (part.x == headx && part.y == heady) {
+        if (part.x == snake1.headxx && part.y == snake1.headyy) {
             death += 1;
         }
-        if (part.x == headx2 && part.y == heady2) {
+        if (part.x == snake2.headxx && part.y == snake2.headyy) {
             death += 1;
         }
     }
 
     ss << "@";
-    for ( const auto part: snakeparts2 ) {
+    for ( const auto part: snake2.get_body() ) {
         ss << "." << part.strrep();
-        if (part.x == headx2 && part.y == heady2) {
+        if (part.x == snake2.headxx && part.y == snake2.headyy) {
             death2 += 1;
         }
-        if (part.x == headx && part.y == heady) {
+        if (part.x == snake1.headxx && part.y == snake1.headyy) {
             death2 += 1;
         }
     }
@@ -224,17 +123,11 @@ reset() {
     foody = 12;
     height = 24;
     width = 24;
-    headx = 10;
-    heady = 10;
-    dir = RIGHT;
+    dir = snake_instance::eDirection::RIGHT;
+    snake1.reset(10, 10, dir);
+    dir = snake_instance::eDirection::LEFT;
+    snake2.reset(14, 14, dir);
     gameRunning = true;
-    snakelength = 4;
-    snakeparts = {snakebody(10, 10)};
-    headx2 = 14;
-    heady2 = 14;
-    dir2 = LEFT;
-    snakelength2 = 4;
-    snakeparts2 = {snakebody(14, 14)};
 }
 void game::
 gameloop(std::shared_ptr<shared_state> const& state) {
