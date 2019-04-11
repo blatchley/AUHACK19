@@ -37,6 +37,7 @@ setDirection(eDirection direction) {
 
 void snake_instance::
 move() {
+    std::cout << "move called";
     if (dir == LEFT) {
         if (headxx > 1) {
             headxx--;

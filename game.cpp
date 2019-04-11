@@ -49,7 +49,7 @@ game()
 void game::
 moveall() {
 
-    for ( auto part: snake_list) {
+    for ( auto &part: snake_list) {
         part.move();
         if (part.headxx == foodx && part.headyy == foody) {
         part.grow();
