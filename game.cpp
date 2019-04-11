@@ -38,6 +38,11 @@ game() {
 
 }
 
+void game::
+moveall() {
+    move();
+    move2();
+}
 
 void game::
 move() {
@@ -245,10 +250,9 @@ gameloop(std::shared_ptr<shared_state> const& state) {
              }
         } else {
             start = std::chrono::high_resolution_clock::now();
-            move();
-            move2();
+            moveall();
             render(state);
-        }   
+         }
     }
 }
 

@@ -40,6 +40,7 @@ class game : public std::enable_shared_from_this<game>
     void setDirection2(std::string direction);
     void updatefood();
     void reset();
+    void moveall();
     void move();
     void move2();
     void render(std::shared_ptr<shared_state> const& state);
