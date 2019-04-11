@@ -2,11 +2,11 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-// #include "food.hpp"
 
-
-class game 
+class snake_instance 
 {
+
+    public:
     class snakebody 
     {
         public:
@@ -19,13 +19,18 @@ class game
             return std::to_string(x)+","+std::to_string(y);
         }
     };
-
-    int headx, heady;
-    std::string id;
     std::vector <snakebody> snakeparts;
+    int headxx, headyy;
+    std::string name;
+    int snakelength;
     enum eDirection {STOP, LEFT, RIGHT, UP, DOWN};
     eDirection prevdir;
     eDirection dir;
-    void setDirection(std::string direction)
+
+    snake_instance(std::string id, int headx, int heady, eDirection direction);
+    void setDirection(eDirection direction);
     void move();
-}
+    void grow();
+    std::vector<snakebody> get_body();
+    void reset(int x, int y, eDirection dir);
+};

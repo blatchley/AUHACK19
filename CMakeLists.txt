@@ -43,6 +43,8 @@ source_group(TREE ${Boost_INCLUDE_DIRS}/boost/beast PREFIX beast FILES ${BEAST_F
 
 file(GLOB APP_FILES
   beast.hpp
+  snake_instance.cpp
+  snake_instance.hpp
   game.cpp
   game.hpp
   http_session.cpp

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include "snake_instance.hpp"
 // #include "food.hpp"
 
 class shared_state;
