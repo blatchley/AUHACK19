@@ -1,16 +1,12 @@
 
 
-# AUHACK multiplayer snake game
+# Multiplayer snake game
 
-This is a multiplayer snake game made for AUHACK 2019.
-
-Made by Frederik Brasch (https://github.com/FrederikBrasch) and Adam Blatchley Hansen (https://github.com/killerdogice)
+This is a multiplayer snake game, building on a project started at AUHACK 2019 by Frederik Brasch (https://github.com/FrederikBrasch) and Adam Blatchley Hansen (https://github.com/killerdogice)
 
 Game consists of a c++ boost::beast web socket server running a basic c++ game engine, running in docker, on a google cloud linux vm. The webpage is served with basic html and javascript. 
 
-Web hosting is set up at www.competitivesnek.dk, however the hosting has not yet gone through full dns registration, and may not be responsive before the deadline. 
-
-If the website is not active, the google server can be accessed at http://35.243.131.250/, and should remain stable for at least a month or so.
+Web hosting is set up at www.competitivesnek.dk, and the google cloud VM should have enough free credits to continue running until ~late May/early June.
 
 To play the game, click connect, then control the two snakes with arrow keys and wasd.
 
