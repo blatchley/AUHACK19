@@ -2,9 +2,11 @@
 
 # Multiplayer snake game
 
-This is a multiplayer snake game, building on a project started at AUHACK 2019 by Frederik Brasch (https://github.com/FrederikBrasch) and Adam Blatchley Hansen (https://github.com/killerdogice)
+This is a multiplayer snake game, building on a project started at AUHACK 2019 (april 5th-7th 2019) in collaboration with https://github.com/FrederikBrasch. 
 
-Game consists of a c++ boost::beast web socket server running a basic c++ game engine, running in docker, on a google cloud linux vm. The webpage is served with basic html and javascript. 
+After the hackathon I decided to continue development as project to continue learning c++, javascript, and general server networking.
+
+The backend consists of a c++ boost::beast web socket server running a basic c++ game engine, running in docker, on a google cloud linux vm. The webpage is served with basic html and javascript. 
 
 Web hosting is set up at www.competitivesnek.dk, and the google cloud VM should have enough free credits to continue running until ~late May/early June.
 
