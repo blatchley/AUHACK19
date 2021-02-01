@@ -16,14 +16,13 @@ To play the game, click connect, then control the two snakes with arrow keys and
 
 The goal of this project was to gain experience with new tools while developing something fun.
 
-Adam: 
-      No previous experience with c++, and only very minimal c experience from basic handins for computer architecture course @ Aarhus university.
+No previous experience with c++, and only very minimal c experience from basic handins for computer architecture course @ Aarhus university.
       
-      No previous javascript experience.
+No previous javascript experience.
       
-      No previous docker experience.
+No previous docker experience.
       
-      No previous server setup experience.
+No previous server setup experience.
 
 ## Docker Container
 To run this server in a Docker container, simply pull the repo, and enter the following commands:
